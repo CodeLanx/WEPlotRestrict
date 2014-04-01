@@ -1,0 +1,11 @@
+main: com.codelanx.weplotrestrict.WEPlotRestrict
+name: ${project.name}
+prefix: WEPRestrict
+description: Restricts worldedits within a single plot
+version: ${project.version}
+author: 1Rogue
+website: https://codelanx.com/
+depend: [WorldEdit, PlotMe]
+permissions:
+  weplotrestrict.override:
+    description: Allows overriding the single plot restriction
