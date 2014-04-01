@@ -46,14 +46,14 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class WEPlotRestrict extends JavaPlugin implements Listener {
 
-    private Set<String> cmds = new HashSet<>();
-    private String prefix;
+    private final Set<String> cmds = new HashSet<>();
+    private final String prefix = ChatColor.WHITE + "[" + ChatColor.RED + "PlotRestrict" + ChatColor.WHITE + "] ";
 
     /**
      * This will load any commands in use by WorldEdit under Command class
      * handlers that should be checked. It will remove known "okay" commands in
      * use at the time of this plugin's creation.<br /><br />
-     * 
+     *
      * {@inheritDoc}
      *
      * @since 1.0.0
@@ -61,13 +61,13 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
      */
     @Override
     public void onEnable() {
-
-        this.prefix = ChatColor.WHITE + "[" + ChatColor.RED + "WorldEdit" + ChatColor.WHITE + "] ";
         Class[] cs = new Class[]{
             UtilityCommands.class,
             BiomeCommands.class,
             ClipboardCommands.class,
-            RegionCommands.class,};
+            RegionCommands.class
+        };
+
         for (Class c : cs) {
             this.addCommands(cs.getClass().getMethods());
         }
@@ -135,10 +135,10 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
 
     /**
      * Verifies if a region is contained within a single {@link Plot}
-     * 
+     *
      * @since 1.0.0
      * @version 1.0.0
-     * 
+     *
      * @param reg The {@link Region} to check
      * @param world The {@link World} the region is in
      * @return {@code true} if it is contained in a single {@link Plot}
