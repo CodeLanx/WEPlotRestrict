@@ -34,6 +34,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -78,6 +79,8 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
         cmds.remove("rotate");
         cmds.remove("save");
         cmds.remove("schematic");
+        
+        this.getServer().getPluginManager().registerEvents(this, this);
     }
 
     /**
@@ -107,7 +110,7 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
      *
      * @param event The {@link PlayerCommandPreprocessEvent} to listen to
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().split(" ")[0];
         command = command.replaceAll("\\/", "");
@@ -122,7 +125,7 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
             if (reg == null) {
                 event.getPlayer().sendMessage(this.prefix + ChatColor.RED + "Error getting region selection!");
             }
-            if (!this.verifyRegion(reg, event.getPlayer().getWorld()) && !event.getPlayer().hasPermission("weplotrestrict.override")) {
+            if (!event.getPlayer().hasPermission("weplotrestrict.override") && !this.verifyRegion(reg, event.getPlayer().getWorld())) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(this.prefix + ChatColor.RED + "Selection area must remain wtihin a single plot!");
             }
@@ -144,6 +147,10 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
         Vector min = reg.getMinimumPoint();
         Plot maxp = PlotManager.getPlotById(new Location(world, max.getBlockX(), max.getBlockY(), max.getBlockZ()));
         Plot minp = PlotManager.getPlotById(new Location(world, min.getBlockX(), min.getBlockY(), min.getBlockZ()));
+        if (minp == null || maxp == null) {
+            return false;
+        }
         return maxp.equals(minp);
     }
+    
 }
