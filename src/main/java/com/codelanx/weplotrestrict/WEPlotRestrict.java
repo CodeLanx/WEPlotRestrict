@@ -61,22 +61,10 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
      */
     @Override
     public void onEnable() {
-        Class[] cs = new Class[]{
-            UtilityCommands.class,
-            BiomeCommands.class,
-            ClipboardCommands.class,
-            RegionCommands.class
-        };
-
-        Object o = new Object();
-        Set<String> dis = new HashSet<>();
-        for (Method m : o.getClass().getMethods()) {
-            dis.add(m.getName().toLowerCase());
-        }
-
-        for (Class c : cs) {
-            this.addCommands(dis, cs.getClass().getMethods());
-        }
+        this.addCommands(UtilityCommands.class.getDeclaredMethods());
+        this.addCommands(BiomeCommands.class.getDeclaredMethods());
+        this.addCommands(ClipboardCommands.class.getDeclaredMethods());
+        this.addCommands(RegionCommands.class.getDeclaredMethods());
 
         //BiomeCommands.class
         cmds.remove("biomeinfo");
@@ -98,15 +86,12 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
      * @since 1.0.0
      * @version 1.0.0
      *
-     * @param ignore Methods to ignore
      * @param methods Any methods to add
      */
-    public void addCommands(Set<String> ignore, Method... methods) {
+    public void addCommands(Method... methods) {
         for (Method m : methods) {
             String cmd = m.getName().toLowerCase();
-            if (!ignore.contains(cmd)) {
-                this.cmds.add(cmd);
-            }
+            this.cmds.add(cmd);
         }
     }
 
