@@ -137,7 +137,7 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
             if (reg == null) {
                 event.getPlayer().sendMessage(this.prefix + ChatColor.RED + "Error getting region selection!");
             }
-            if (!this.verifyRegion(reg, event.getPlayer().getWorld())) {
+            if (!this.verifyRegion(reg, event.getPlayer().getWorld()) && !event.getPlayer().hasPermission("weplotrestrict.override")) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(this.prefix + ChatColor.RED + "Selection area must remain wtihin a single plot!");
             }
