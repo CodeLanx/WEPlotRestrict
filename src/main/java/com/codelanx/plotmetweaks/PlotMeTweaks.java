@@ -48,7 +48,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class PlotMeTweaks extends JavaPlugin implements Listener {
 
     private final Set<String> cmds = new HashSet<>();
-    private final String prefix = ChatColor.WHITE + "[" + ChatColor.RED + this.getName() + ChatColor.WHITE + "] ";
+    private String prefix;
 
     /**
      * This will load any commands in use by WorldEdit under Command class
@@ -62,6 +62,8 @@ public class PlotMeTweaks extends JavaPlugin implements Listener {
      */
     @Override
     public void onEnable() {
+        prefix = ChatColor.WHITE + "[" + ChatColor.RED + this.getName() + ChatColor.WHITE + "] ";
+        
         this.addCommands(UtilityCommands.class.getDeclaredMethods());
         this.addCommands(BiomeCommands.class.getDeclaredMethods());
         this.addCommands(ClipboardCommands.class.getDeclaredMethods());
