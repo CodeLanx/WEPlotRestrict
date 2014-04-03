@@ -1,4 +1,4 @@
-main: com.codelanx.weplotrestrict.WEPlotRestrict
+main: com.codelanx.plotmetweaks.PlotMeTweaks
 name: ${project.name}
 prefix: WEPRestrict
 description: Restricts worldedits within a single plot

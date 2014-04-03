@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.codelanx.weplotrestrict;
+package com.codelanx.plotmetweaks;
 
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.Vector;
@@ -45,10 +45,10 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author 1Rogue
  * @version 1.0.0
  */
-public class WEPlotRestrict extends JavaPlugin implements Listener {
+public class PlotMeTweaks extends JavaPlugin implements Listener {
 
     private final Set<String> cmds = new HashSet<>();
-    private final String prefix = ChatColor.WHITE + "[" + ChatColor.RED + "PlotRestrict" + ChatColor.WHITE + "] ";
+    private final String prefix = ChatColor.WHITE + "[" + ChatColor.RED + this.getName() + ChatColor.WHITE + "] ";
 
     /**
      * This will load any commands in use by WorldEdit under Command class
@@ -73,7 +73,7 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
 
         //ClipboardCommands.class
         cmds.remove("clearclipboard");
-        cmds.remove("copy");
+        cmds.remove("paste");
         cmds.remove("flip");
         cmds.remove("load");
         cmds.remove("rotate");
@@ -114,6 +114,7 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
     public void onCommand(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().split(" ")[0];
         command = command.replaceAll("\\/", "");
+        command = command.toLowerCase();
         if (this.cmds.contains(command)) {
             Region reg = null;
             try {
@@ -152,5 +153,5 @@ public class WEPlotRestrict extends JavaPlugin implements Listener {
         }
         return maxp.equals(minp);
     }
-    
+
 }
